@@ -1,4 +1,5 @@
 import { env } from "./config/env";
+import { logger } from "./utils/logger";
 import { buildServer } from "./utils/server";
 
 async function graceFulShutDown({
@@ -15,6 +16,8 @@ async function main() {
   app.listen({ port: env.PORT, host: env.HOST });
 
   const signals = ["SIGINT", "SIGTERM"];
+
+  logger.debug(env);
 
   for (const signal of signals) {
     process.on(signal, async () => {
