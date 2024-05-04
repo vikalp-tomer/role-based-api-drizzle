@@ -27,7 +27,7 @@ export const users = pgTable(
   },
   (users) => {
     return {
-      cpk: primaryKey(users.email, users.applicationId),
+      cpk: primaryKey({ columns: [users.email, users.applicationId] }),
       idIndex: uniqueIndex("users_id_index").on(users.id),
     };
   }
@@ -45,8 +45,35 @@ export const roles = pgTable(
   },
   (roles) => {
     return {
-      cpk: primaryKey(roles.name, roles.applicationId),
+      cpk: primaryKey({ columns: [roles.name, roles.applicationId] }),
       idIndex: uniqueIndex("roles_id_index").on(roles.id),
+    };
+  }
+);
+
+export const usersToRoles = pgTable(
+  "usersToRoles",
+  {
+    applicationId: uuid("applicationId")
+      .references(() => application.id)
+      .notNull(),
+    roleId: uuid("roleId")
+      .references(() => roles.id)
+      .notNull(),
+
+    userId: uuid("userId")
+      .references(() => users.id)
+      .notNull(),
+  },
+  (usersToRoles) => {
+    return {
+      cpk: primaryKey({
+        columns: [
+          usersToRoles.applicationId,
+          usersToRoles.roleId,
+          usersToRoles.userId,
+        ],
+      }),
     };
   }
 );
