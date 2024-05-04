@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 
-export const application = pgTable("applications", {
+export const applications = pgTable("applications", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 256 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -20,7 +20,7 @@ export const users = pgTable(
     id: uuid("id").defaultRandom().notNull(),
     email: varchar("email", { length: 256 }).notNull(),
     name: varchar("name", { length: 256 }).notNull(),
-    applicationId: uuid("applicationId").references(() => application.id),
+    applicationId: uuid("applicationId").references(() => applications.id),
     password: varchar("password", { length: 256 }).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -38,7 +38,7 @@ export const roles = pgTable(
   {
     id: uuid("id").defaultRandom().notNull(),
     name: varchar("name", { length: 256 }).notNull(),
-    applicationId: uuid("applicationId").references(() => application.id),
+    applicationId: uuid("applicationId").references(() => applications.id),
     permissions: text("permissions").array().$type<Array<string>>(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -55,7 +55,7 @@ export const usersToRoles = pgTable(
   "usersToRoles",
   {
     applicationId: uuid("applicationId")
-      .references(() => application.id)
+      .references(() => applications.id)
       .notNull(),
     roleId: uuid("roleId")
       .references(() => roles.id)
