@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714807455007,
+      "tag": "0000_dapper_iron_lad",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1714807961119,
+      "tag": "0001_dazzling_blue_marvel",
+      "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1714808283291,
+      "tag": "0002_abandoned_stepford_cuckoos",
+      "breakpoints": false
+    }
+  ]
+}
